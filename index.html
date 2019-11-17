@@ -1,10 +1,29 @@
 <!DOCTYPE html>
 <html>
-    <header>
-        <title>Web</title>
-    </header>
+<header>
+    <title>Traffic Sign Classifier</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/predict.js"></script>
+</header>
 
-    <body>
-        <h1>Hello</h1>
-    </body>
+<body onload="loadModel()">
+    <div class="flex-col-container">
+        <div class="examples">
+            <img src="http://placekitten.com/500/300" />
+            <img src="http://placekitten.com/800/800" />
+            <img src="http://placekitten.com/800/800" />
+            <img src="http://placekitten.com/800/800" />
+        </div>
+
+        <div id="drag-upload">
+            <div id="upload-box">
+                <input type="file" name="files[]" id="file" class="upload-box-file" data-multiple-caption="{count} files selected" multiple />
+                <label for="file"><strong>Choose a file</strong> or drag it here</label>
+            </div>
+            <button type="button">Predict</button>
+        </div>
+    </div>
+</body>
 </html>
