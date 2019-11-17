@@ -2,40 +2,46 @@ let modelURL = "https://kollinb.github.io/model/model.json";
 let model;
 
 async function loadModel() {
-    console.log('Loading model from ' + modelURL);
+    console.log('Loading model from ' + modelURL)
 
     model = undefined;
     try {
-        model = await tf.loadLayersModel(modelURL);
+        model = await tf.loadLayersModel(modelURL)
     } catch(err) {
-        console.log('Failed to load model');
-        console.log(err);
+        console.log('Failed to load model')
+        console.log(err)
     }
 }
 
-function preprocessImage(image) {
-    let tensor = tf.browser.fromPixels(image).resizeNearestNeighbour([37, 37]).toFloat();
-    tensor = tf.image.rgb
-
-    return tensor.expandDims();
+async function handleFiles(files) {
+    previewImage(files[0])
+    let predictionResult = await predictImage(files[0]) // should probably wait for them to press a button in prod
 }
 
-function predictResult() {
-    let image = document.getElementById("predict-img");
-    let tensor = preprocessImage(image);
-    let predictions = await model.predict(tensor).data();
+async function predictImage(file) {
+    let reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onloadend = async function () {
+        let img = document.createElement('img')
+        img.src = reader.result
+        let tensor = tf.browser.fromPixels(img).resizeNearestNeighbor([37, 37]).toFloat().expandDims(0)
+        tensor.print()
 
-    console.log(predictions);
-}
-
-
-
-// renders the image which is loaded from disk to the img tag 
-function renderImage(file) {
-    var reader = new FileReader();
-    reader.onload = function (event) {
-        img_url = event.target.result;
-        document.getElementById("test-image").src = img_url;
+        let predictions = await model.predict(tensor).data()
+        console.log(predictions)
     }
-    reader.readAsDataURL(file);
 }
+
+function previewImage(file) {
+    let reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onloadend = function () {
+        let img = document.createElement('img')
+        img.src = reader.result
+        img.style.height = '200px'
+        img.style.width = '200px'
+        document.getElementById('drag-upload').appendChild(img)
+    }
+}
+
+$(document).ready(loadModel);

@@ -4,11 +4,11 @@
     <title>Traffic Sign Classifier</title>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="js/predict.js"></script>
 </header>
 
-<body onload="loadModel()">
+<body>
     <div class="flex-col-container">
         <div class="examples">
             <img src="http://placekitten.com/500/300" />
@@ -19,8 +19,8 @@
 
         <div id="drag-upload">
             <div id="upload-box">
-                <input type="file" name="files[]" id="file" class="upload-box-file" data-multiple-caption="{count} files selected" multiple />
-                <label for="file"><strong>Choose a file</strong> or drag it here</label>
+                <input type="file" name="files[]" id="file-upload" multiple accept="image/*" onchange="handleFiles(this.files)" />
+                <label for="file-upload" class="file-upload-label"><strong>Choose a file</strong> or drag it here</label>
             </div>
             <button type="button">Predict</button>
         </div>

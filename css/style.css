@@ -37,6 +37,11 @@ body {
     justify-content: center;
 }
 
+.file-upload-label {
+    display: inline-block;
+    cursor: pointer;
+}
+
 #upload-box {
     margin-left: 25%;
     width: 50%;
